@@ -1,0 +1,204 @@
+
+newmtl CartoonFFFF00
+Kd  01 01 00
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+
+
+
+
+newmtl Cartoon642819
+Kd  0.39215688 0.156862752 0.09803922
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+
+
+
+
+newmtl FlatFFFFFFwarp
+Kd  01 01 01
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+map_Kd warp.png
+
+
+
+
+newmtl FlatFFFFFFwarp5
+Kd  01 01 01
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+map_Kd warp5.png
+
+
+
+
+newmtl Cartoon885F3A
+Kd  0.5333334 0.37254904 0.22745098
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+
+
+
+
+newmtl CartoonFF0000
+Kd  01 00 00
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+
+
+
+
+newmtl FlatFFFFFFsteelarmour
+Kd  01 01 01
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+map_Kd steelarmour.png
+
+
+
+
+newmtl FlatFFFFFFcopper
+Kd  01 01 01
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+map_Kd copper.png
+
+
+
+
+newmtl CartoonFFFFFFcopper
+Kd  01 01 01
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+map_Kd copper.png
+
+
+
+
+newmtl CartoonFF00FF
+Kd  01 00 01
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+
+
+
+
+newmtl CartoonC1B805
+Kd  0.75686272 0.7215686 0.019607844
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+
+
+
+
+newmtl Cartoon00FF00
+Kd  00 01 00
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+
+
+
+
+newmtl FlatFFFFFFclouds4
+Kd  01 01 01
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+map_Kd clouds4.png
+
+
+
+
+newmtl Standard777777
+Kd  0.4666666 0.4666666 0.4666666
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+
+
+
+
+newmtl CartoonCF8210
+Kd  0.8117647 0.50980396 0.0627451
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+
+
+
+
+newmtl Cartoon00FF7F
+Kd  00 01 0.4980392
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+
+
+
+
+newmtl CartoonDD372B
+Kd  0.8666668 0.21568624 0.16862748
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+
+
+
+
+newmtl CartoonFF007F
+Kd  01 00 0.4980392
+Ks  0.8 0.8 0.8
+Ka  00 00 00
+d  01
+Ns  925
+illum 2
+
+
+
