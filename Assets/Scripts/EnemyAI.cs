@@ -7,6 +7,7 @@ public class EnemyAI : MonoBehaviour
 {
     NavMeshAgent agent;
     Animator anim;
+
     Transform target; //ana karakterin pozisyonu
     public bool isDead = false;
 
@@ -16,6 +17,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     float attackTimer = 2f; // player'ın 2 saniyede bir canı azalsın.
 
+    EnemyHealth enemyHealth;
     void Start()
     {
         //canAttack = true;
@@ -23,23 +25,29 @@ public class EnemyAI : MonoBehaviour
         anim = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
+    public float distance;
 
     void Update()
     {
-        float distance = Vector3.Distance(transform.position, target.position); //zombinin konumu ve ana karakterin konumu arasındaki mesafeyi distance olarak tanımladık
+          distance = Vector3.Distance(transform.position, target.position); //zombinin konumu ve ana karakterin konumu arasındaki mesafeyi distance olarak tanımladık
 
-        if (distance < 10 && distance > agent.stoppingDistance && !isDead)
+        if (distance < 15 && distance > agent.stoppingDistance /* && !isDead*/)
         {
             ChasePlayer();
+            Debug.Log("takip ediyoruz ğuuu");
         }
         else if (distance <= agent.stoppingDistance /*&& canAttack == true && PlayerHealth.PH.isDead == false*/) //player canlı ise, zombi ona saldırabilsin
         {
-            AttackPlayer();
+             AttackPlayer();
+            Debug.Log("attack etmek lazım");
         }
-        else if (distance > 10) //zombir, artık takip etmesin
+        else if (distance > 15) //zombir, artık takip etmesin
         {
             StopChase();
+            Debug.Log("takibi biraktik ğuuu");
         }
+
+        
     }
 
     //karakteri takip ettiren fonk
@@ -49,7 +57,7 @@ public class EnemyAI : MonoBehaviour
         agent.updatePosition = true; //pozisyonu güncellenecek
         agent.SetDestination(target.position);
         anim.SetBool("isRunning", true);
-        anim.SetBool("Attack", false); //koşarken atak yapamasın
+        //anim.SetBool("Attack", false); //koşarken atak yapamasın
     }
 
     void AttackPlayer()
@@ -65,7 +73,8 @@ public class EnemyAI : MonoBehaviour
         }
         agent.updatePosition = false; //durarak atak yapacak
         anim.SetBool("isRunning", false);
-        anim.SetBool("Attack", true);
+        anim.SetBool("isAttack", true);
+        anim.SetBool("isIdle",false);
         //  StartCoroutine(AttackTime());
     }
 
@@ -73,6 +82,31 @@ public class EnemyAI : MonoBehaviour
     {
         agent.updatePosition = false;
         anim.SetBool("isRunning", false);
-        anim.SetBool("Attack", false);
+        //anim.SetBool("Attack", false);
     }
+
+    public void DeadAnim()
+    {
+        
+        isDead = true;
+        Debug.Log("Enemy öldüü");
+        anim.SetBool("isDead", true);
+        anim.SetBool("isAttack", false);
+        anim.SetBool("isIdle", false);
+        anim.SetBool("isRunning", false);
+
+    }
+
+    /* public void Hurt()
+     {
+         agent.enabled = false;
+         anim.SetTrigger("Hit");
+         StartCoroutine(Nav());
+     }
+
+     IEnumerator Nav()
+     {
+         yield return new WaitForSeconds(1.5f);
+         agent.enabled = true;
+     }*/
 }

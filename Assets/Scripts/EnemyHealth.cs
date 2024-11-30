@@ -5,7 +5,12 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public float enemyHealth = 100f;
+    EnemyAI enemy;
 
+    private void Start()
+    {
+        enemy = GetComponent<EnemyAI>();
+    }
     private void Update()
     {
         if (enemyHealth < 0)
@@ -19,16 +24,18 @@ public class EnemyHealth : MonoBehaviour
         enemyHealth -= reduceHealth;
         Debug.Log("Enemy Health Reduced: " + enemyHealth);
 
-        if (enemyHealth <= 0)
-        {
-            Dead();
-        }
-    }
+         if (enemyHealth <= 0)
+         {
+            enemy.DeadAnim();
+         }
+     }
 
-    void Dead()
-    {
-        Debug.Log("Enemy Dead");
-        //enemy.canAttack = false; //enemy öldüğünde player'a zarar veremesin.
-        Destroy(gameObject, 10f);
+    /* void Dead()
+     {
+         Debug.Log("Enemy Dead");
+         //enemy.canAttack = false; //enemy öldüğünde player'a zarar veremesin.
+         Destroy(gameObject, 10f);
+     }
+    */
+
     }
-}
