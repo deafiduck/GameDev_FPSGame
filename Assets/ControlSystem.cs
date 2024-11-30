@@ -2,59 +2,68 @@ using UnityEngine;
 
 public class ControlSystem : MonoBehaviour
 {
-    public float moveSpeed = 5f;  // Karakterin hareket hýzý
+    public float moveSpeed = 5f;  // Normal hareket hýzý
+    public float sprintSpeed = 8f;  // Koþma hýzý (Shift ile aktif olur)
     public float rotationSpeed = 140f;  // Karakterin dönüþ hýzý
     public float jumpForce = 5f;  // Karakterin zýplama kuvveti
 
     private Rigidbody rb;
     private bool isGrounded;
-    private CharacterAnimation characterAnimation;
+    private float currentSpeed;  // Þu anki hýz
+    public CharacterAnimation characterAnimation;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;  // Karakterin fiziksel olarak dönmesini engelle
-        characterAnimation = GetComponent<CharacterAnimation>();
+        characterAnimation = GameObject.FindWithTag("Player").GetComponent<CharacterAnimation>();
+
+        currentSpeed = moveSpeed;  // Baþlangýçta normal hýz ayarlanýr
     }
 
     void Update()
     {
-        Move();
-        Rotate();
+        HandleSprint();  // Shift tuþuna basýlma durumunu kontrol eder
+        MoveAndRotate();
         Jump();
     }
 
-    void Move()
+    void HandleSprint()
     {
-        float moveDirection = Input.GetAxis("Vertical");  // W/S veya Up/Down ok tuþlarý
-        Vector3 move = transform.forward * moveDirection * moveSpeed * Time.deltaTime;
-        rb.MovePosition(rb.position + move);
-
-        // Karakter hareket ediyorsa animasyonu tetikleyin
-       /* if (moveDirection != 0)
+        // Shift'e basýlýysa hýzlan, deðilse normal hýza dön
+        if (Input.GetKey(KeyCode.LeftShift))
         {
-            characterAnimation.SetRunning(true);
+            currentSpeed = sprintSpeed;
         }
         else
         {
-            characterAnimation.SetRunning(false);
-        }*/
+            currentSpeed = moveSpeed;
+        }
     }
 
-    void Rotate()
+    void MoveAndRotate()
     {
+        float moveDirection = Input.GetAxis("Vertical");  // W/S veya Up/Down ok tuþlarý
         float turnDirection = Input.GetAxis("Horizontal");  // A/D veya Left/Right ok tuþlarý
+
+        // Hareket iþlemi
+        Vector3 move = transform.forward * moveDirection * currentSpeed * Time.deltaTime;
+        rb.MovePosition(rb.position + move);
+
+        // Dönüþ iþlemi
         float turn = turnDirection * rotationSpeed * Time.deltaTime;
         Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
         rb.MoveRotation(rb.rotation * turnRotation);
-        /* if (turnDirection != 0)
+
+        // Animasyon kontrolü
+        if (moveDirection != 0 || turnDirection != 0) // Herhangi bir giriþ varsa
         {
-            characterAnimation.SetRunning(true);
+            characterAnimation.SetRunning();
         }
         else
         {
-            characterAnimation.SetRunning(false);
-        }*/
+            characterAnimation.SetIdle();
+        }
     }
 
     void Jump()
