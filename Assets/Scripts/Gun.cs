@@ -16,11 +16,11 @@ public class Gun : MonoBehaviour
     float nextFire = 0; //baslangic süresi
 
     [SerializeField]
-    float weaponRange; //atis mesafesi(ne kadar uzaða atis yapabiliriz)
+    float weaponRange; //atis mesafesi(ne kadar uzağa atis yapabiliriz)
 
     public Transform shootPoint; //bubble'in cikis noktasi
     public GameObject bulletPrefab; // bubble prefabı
-    
+
     public float damage = 20f;
     bool isReloading;
 
@@ -41,50 +41,35 @@ public class Gun : MonoBehaviour
         }
     }
 
-
-    //her atýþ arasýna 0.5 gibi belirli bir fark koyar.Yani 0.5 sn aralýk ile atýþ yapmamýzý saðlar
     void Shoot()
     {
         if (Time.time > nextFire)
         {
             nextFire = Time.time + rateofFire;
-
+           
             currentAmmo--; //bubble sayisi azaliyo
             Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
             ShootRay();
         }
-
-      //  UpdateAmmoUI();
-
     }
 
     void ShootRay()
     {
-
-        if (Physics.Raycast(shootPoint.position, shootPoint.forward, out hit, weaponRange)) //merminin cikacagi yer,yönü,hedef,mesafe(bizden çikan ray bir yere vurursa)
+        if (Physics.Raycast(shootPoint.position, shootPoint.forward, out hit, weaponRange)) //merminin cikacagi yer, yönü, hedef, mesafe
         {
-            /*if (hit.transform.tag == "Enemy")
+            if (hit.transform.tag == "Enemy")
             {
                 EnemyHealth enemy = hit.transform.GetComponent<EnemyHealth>();
-                Instantiate(bloodEffect, hit.point, transform.rotation);
-                enemy.ReduceHealth(damage);
-            }
-            else if (hit.transform.tag == "Head")
-            {
-                EnemyHealth enemy = hit.transform.GetComponentInParent<EnemyHealth>(); //parent'i içindeki scripte eriþeceðimiz için böyle yazdýk
-                enemy.ReduceHealth(100f); //kafasýna vurunca direkt ölecek
-                Instantiate(headShootBlood, hit.point, transform.rotation);
-                hit.transform.gameObject.SetActive(false);
-            }
-            else if (hit.transform.tag == "Metal")
-            {
-                pistolAS.PlayOneShot(shootMetalAC);
-                Instantiate(bulletHole, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal)); //Instantiate ile gameobject oluþturabiliriz.
+                if (enemy != null)
+                {
+                    enemy.ReduceHealth(damage);
+                    Debug.Log("Enemy hit, health reduced by: " + damage);
+                }
             }
             else
             {
-                Debug.Log("Something else");
-            }*/
+                Debug.Log("Hit something else");
+            }
         }
     }
 
@@ -99,11 +84,11 @@ public class Gun : MonoBehaviour
 
     void EmptyFire()
     {
-        if (Time.time > nextFire)  //sürekli tetiðe basamamak için
+        if (Time.time > nextFire)  //sürekli tetige basamamak için
         {
             nextFire = Time.time + rateofFire;
-          //  pistolAS.PlayOneShot(emptyFire);
-          // anim.SetTrigger("Empty");
+            //  pistolAS.PlayOneShot(emptyFire);
+            // anim.SetTrigger("Empty");
         }
     }
 }

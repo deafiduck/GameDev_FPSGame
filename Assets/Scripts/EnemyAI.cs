@@ -10,19 +10,19 @@ public class EnemyAI : MonoBehaviour
     Transform target; //ana karakterin pozisyonu
     public bool isDead = false;
 
-     float turnSpeed=5f; //player'a doğru dönme hızı
-  
-    public bool canAttack; //zombi, palyer'a atak yapacak durumda mı. Yani canını 25 azalatabilecek mi.
+    float turnSpeed = 5f; //player'a doğru dönme hızı
+
+    //public bool canAttack; //zombi, palyer'a atak yapacak durumda mı. Yani canını 25 azalatabilecek mi.
     [SerializeField]
     float attackTimer = 2f; // player'ın 2 saniyede bir canı azalsın.
+
     void Start()
     {
-        canAttack = true;
+        //canAttack = true;
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
-
 
     void Update()
     {
@@ -32,7 +32,7 @@ public class EnemyAI : MonoBehaviour
         {
             ChasePlayer();
         }
-        else if (distance <= agent.stoppingDistance && canAttack == true /*&& PlayerHealth.PH.isDead == false*/) //player canlı ise, zombi ona saldırabilsin
+        else if (distance <= agent.stoppingDistance /*&& canAttack == true && PlayerHealth.PH.isDead == false*/) //player canlı ise, zombi ona saldırabilsin
         {
             AttackPlayer();
         }
@@ -59,8 +59,11 @@ public class EnemyAI : MonoBehaviour
         agent.updateRotation = false;
         Vector3 direction = target.position - transform.position;  //zombi atak yaparken yüzünün player'a dönük olması için rotasyonunu ayarladık
         direction.y = 0;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), turnSpeed * Time.deltaTime);
-        agent.updatePosition = false; //durarak atacak yapacak
+        if (direction != Vector3.zero)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), turnSpeed * Time.deltaTime);
+        }
+        agent.updatePosition = false; //durarak atak yapacak
         anim.SetBool("isRunning", false);
         anim.SetBool("Attack", true);
         //  StartCoroutine(AttackTime());
@@ -72,7 +75,4 @@ public class EnemyAI : MonoBehaviour
         anim.SetBool("isRunning", false);
         anim.SetBool("Attack", false);
     }
-
-    
-
 }
