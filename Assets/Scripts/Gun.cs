@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
@@ -19,7 +20,7 @@ public class Gun : MonoBehaviour
 
     public Transform shootPoint; //bubble'in cikis noktasi
     public GameObject bulletPrefab; // bubble prefabı
-
+    
     public float damage = 20f;
     bool isReloading;
 
