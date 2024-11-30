@@ -3,19 +3,18 @@ using UnityEngine;
 public class ControlSystem : MonoBehaviour
 {
     public float moveSpeed = 5f;  // Karakterin hareket hýzý
-    public float rotationSpeed = 720f;  // Karakterin dönüþ hýzý
+    public float rotationSpeed = 140f;  // Karakterin dönüþ hýzý
     public float jumpForce = 5f;  // Karakterin zýplama kuvveti
-    public LayerMask groundLayers;  // Zýplama kontrolü için zemin katmanlarý
-    public Transform groundCheck;  // Zemin kontrolü için nokta
-    public float groundCheckRadius = 0.1f;  // Zemin kontrolü için yarýçap
 
     private Rigidbody rb;
     private bool isGrounded;
+    private CharacterAnimation characterAnimation;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;  // Karakterin fiziksel olarak dönmesini engelle
+        characterAnimation = GetComponent<CharacterAnimation>();
     }
 
     void Update()
@@ -30,6 +29,16 @@ public class ControlSystem : MonoBehaviour
         float moveDirection = Input.GetAxis("Vertical");  // W/S veya Up/Down ok tuþlarý
         Vector3 move = transform.forward * moveDirection * moveSpeed * Time.deltaTime;
         rb.MovePosition(rb.position + move);
+
+        // Karakter hareket ediyorsa animasyonu tetikleyin
+       /* if (moveDirection != 0)
+        {
+            characterAnimation.SetRunning(true);
+        }
+        else
+        {
+            characterAnimation.SetRunning(false);
+        }*/
     }
 
     void Rotate()
@@ -38,15 +47,33 @@ public class ControlSystem : MonoBehaviour
         float turn = turnDirection * rotationSpeed * Time.deltaTime;
         Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
         rb.MoveRotation(rb.rotation * turnRotation);
+        /* if (turnDirection != 0)
+        {
+            characterAnimation.SetRunning(true);
+        }
+        else
+        {
+            characterAnimation.SetRunning(false);
+        }*/
     }
 
     void Jump()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayers);
-
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
+        // Zýplama kontrolü için zeminde olup olmadýðýmýzý kontrol ediyoruz
+        isGrounded = true;
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        // Zýplama kontrolü için zeminde olmadýðýmýzý kontrol ediyoruz
+        isGrounded = false;
     }
 }
