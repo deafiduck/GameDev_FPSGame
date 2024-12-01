@@ -7,7 +7,7 @@ public class FlyweightGun : MonoBehaviour
 {
     public List<FlyweightSettings> flyweights;  // Farklý mermi ayarlarýný içeren liste
     public Transform shootPoint; // Merminin çýkýþ noktasý
-    public float rateOfFire = 0.2f; // Ateþ etme sýklýðý
+    public float rateOfFire = 0.02f; // Ateþ etme sýklýðý
     public int maxAmmo = 12; // Maksimum mermi kapasitesi
     public int currentAmmo; // Þu anki mermi sayýsý
     public int carriedAmmo = 60; // Taþýnan mermi miktarý
