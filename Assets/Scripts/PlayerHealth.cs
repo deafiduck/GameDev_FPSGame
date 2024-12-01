@@ -22,6 +22,8 @@ public class PlayerHealth : MonoBehaviour
 
     float colorSpeed = 0.5f;
 
+    private GameOverManager gameOverManager;
+
     private void Awake() //start fonkundan önce calisiyo
     {
         PH = this;
@@ -34,6 +36,7 @@ public class PlayerHealth : MonoBehaviour
         healthBarSlider.maxValue = maxHealth;
         healthBarSlider.value = maxHealth;
         healthText.text = maxHealth.ToString();
+        gameOverManager = FindObjectOfType<GameOverManager>(); // GameOverManager referansını al
     }
 
     void Update()
@@ -85,12 +88,6 @@ public class PlayerHealth : MonoBehaviour
         isDead = true;
         healthBarSlider.value = 0;
         UpdateText();
-        StartCoroutine(Wait());
-        SceneManager.LoadScene(1);
-    }
-
-    IEnumerator Wait() //sahneler arası geçişi sağlamak için
-    {
-        yield return new WaitForSeconds(1f);
+        gameOverManager.ShowGameOverPanel(); // Game Over panelini göster
     }
 }
