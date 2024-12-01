@@ -11,31 +11,23 @@ public class EnemyHealth : MonoBehaviour
     {
         enemy = GetComponent<EnemyAI>();
     }
+
     private void Update()
     {
         if (enemyHealth < 0)
         {
-            enemyHealth = 0; //can eksi olamasin
+            enemyHealth = 0;
         }
     }
 
-    public void ReduceHealth(float reduceHealth)  //parametre olarak canın ne kadar azalacağını alıyor
+    public void ReduceHealth(float reduceHealth)
     {
         enemyHealth -= reduceHealth;
         Debug.Log("Enemy Health Reduced: " + enemyHealth);
 
-         if (enemyHealth <= 0)
-         {
+        if (enemyHealth <= 0)
+        {
             enemy.DeadAnim();
-         }
-     }
-
-    /* void Dead()
-     {
-         Debug.Log("Enemy Dead");
-         //enemy.canAttack = false; //enemy öldüğünde player'a zarar veremesin.
-         Destroy(gameObject, 10f);
-     }
-    */
-
+        }
     }
+}

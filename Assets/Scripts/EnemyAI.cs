@@ -8,105 +8,87 @@ public class EnemyAI : MonoBehaviour
     NavMeshAgent agent;
     Animator anim;
 
-    Transform target; //ana karakterin pozisyonu
+    Transform target;
     public bool isDead = false;
 
-    float turnSpeed = 5f; //player'a doğru dönme hızı
-
-    //public bool canAttack; //zombi, palyer'a atak yapacak durumda mı. Yani canını 25 azalatabilecek mi.
+    float turnSpeed = 5f;
     [SerializeField]
-    float attackTimer = 2f; // player'ın 2 saniyede bir canı azalsın.
+    float attackTimer = 2f;
 
-    EnemyHealth enemyHealth;
+    public float damage = 10f;
+
     void Start()
     {
-        //canAttack = true;
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
+
     public float distance;
 
     void Update()
     {
-          distance = Vector3.Distance(transform.position, target.position); //zombinin konumu ve ana karakterin konumu arasındaki mesafeyi distance olarak tanımladık
+        if (isDead) return;
 
-        if (distance < 15 && distance > agent.stoppingDistance /* && !isDead*/)
+        distance = Vector3.Distance(transform.position, target.position);
+
+        if (distance < 20 && distance > agent.stoppingDistance)
         {
             ChasePlayer();
-            Debug.Log("takip ediyoruz ğuuu");
         }
-        else if (distance <= agent.stoppingDistance /*&& canAttack == true && PlayerHealth.PH.isDead == false*/) //player canlı ise, zombi ona saldırabilsin
+        else if (distance <= agent.stoppingDistance)
         {
-             AttackPlayer();
-            Debug.Log("attack etmek lazım");
+            AttackPlayer();
         }
-        else if (distance > 15) //zombir, artık takip etmesin
+        else if (distance > 20)
         {
             StopChase();
-            Debug.Log("takibi biraktik ğuuu");
         }
-
-        
     }
 
-    //karakteri takip ettiren fonk
     void ChasePlayer()
     {
         agent.updateRotation = true;
-        agent.updatePosition = true; //pozisyonu güncellenecek
+        agent.updatePosition = true;
         agent.SetDestination(target.position);
         anim.SetBool("isRunning", true);
-        //anim.SetBool("Attack", false); //koşarken atak yapamasın
     }
 
     void AttackPlayer()
     {
-        // PlayerHealth.PH.Damage(damage);
+        PlayerHealth.PH.Damage(damage);
 
         agent.updateRotation = false;
-        Vector3 direction = target.position - transform.position;  //zombi atak yaparken yüzünün player'a dönük olması için rotasyonunu ayarladık
+        Vector3 direction = target.position - transform.position;
         direction.y = 0;
         if (direction != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), turnSpeed * Time.deltaTime);
         }
-        agent.updatePosition = false; //durarak atak yapacak
+        agent.updatePosition = false;
         anim.SetBool("isRunning", false);
         anim.SetBool("isAttack", true);
-        anim.SetBool("isIdle",false);
-        //  StartCoroutine(AttackTime());
+        anim.SetBool("isIdle", false);
     }
 
     void StopChase()
     {
         agent.updatePosition = false;
         anim.SetBool("isRunning", false);
-        //anim.SetBool("Attack", false);
     }
 
     public void DeadAnim()
     {
-        
+        if (isDead) return;
+
         isDead = true;
-        Debug.Log("Enemy öldüü");
         anim.SetBool("isDead", true);
         anim.SetBool("isAttack", false);
         anim.SetBool("isIdle", false);
         anim.SetBool("isRunning", false);
+        ScoreManager.instance.AddScore(10);
+        agent.isStopped = true;
 
+        Destroy(gameObject, 2f);
     }
-
-    /* public void Hurt()
-     {
-         agent.enabled = false;
-         anim.SetTrigger("Hit");
-         StartCoroutine(Nav());
-     }
-
-     IEnumerator Nav()
-     {
-         yield return new WaitForSeconds(1.5f);
-         agent.enabled = true;
-     }*/
 }
