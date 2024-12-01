@@ -4226,8 +4226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
-  attackTimer: 2
-  damage: 25
+  damage: 10
   distance: 0
 --- !u!114 &845826990
 MonoBehaviour:
@@ -4452,6 +4451,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainCharacter (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4839623503384639986, guid: 4fb2097aeae8f364d88a0913fc0d9b5d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4839623503384639989, guid: 4fb2097aeae8f364d88a0913fc0d9b5d, type: 3}
       propertyPath: m_RootOrder
       value: 22
@@ -4578,7 +4581,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -14.337524, y: -35.844086}
+  m_AnchoredPosition: {x: -14.337402, y: -35.844116}
   m_SizeDelta: {x: -1082.4937, y: 71.6882}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &896791174
@@ -4856,8 +4859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
-  attackTimer: 2
-  damage: 25
+  damage: 10
   distance: 0
 --- !u!195 &952779604
 NavMeshAgent:
@@ -6988,6 +6990,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyweightFactory
       objectReference: {fileID: 0}
+    - target: {fileID: 3294978729384371536, guid: 0e92b0851a43c1642a3d400dcb97c9cc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3294978729384371550, guid: 0e92b0851a43c1642a3d400dcb97c9cc, type: 3}
       propertyPath: m_RootOrder
       value: 23
@@ -7528,6 +7534,43 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7775300782723242234, guid: 51c33c14fc591f24c81f700ba57d1e3c, type: 3}
+--- !u!1 &1809461018 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5758030514642194106, guid: 4fb2097aeae8f364d88a0913fc0d9b5d, type: 3}
+  m_PrefabInstance: {fileID: 886190773}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1809461022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1809461018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6d3fe1284e72004d94f52ded1573b26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toTarget: 0
+--- !u!114 &1809461023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1809461018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd226abd6c12bef448d1faddf07f06f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 100
+  isDead: 0
+  healthBarSlider: {fileID: 531628798}
+  healthText: {fileID: 1087118045}
+  damageColor: {r: 0, g: 0, b: 0, a: 0}
+  damageImage: {fileID: 1534638175}
 --- !u!1 &1820538567
 GameObject:
   m_ObjectHideFlags: 0
@@ -7715,8 +7758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
-  attackTimer: 2
-  damage: 25
+  damage: 10
   distance: 0
 --- !u!136 &1958681675
 CapsuleCollider:

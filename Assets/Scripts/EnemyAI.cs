@@ -13,7 +13,7 @@ public class EnemyAI : MonoBehaviour
 
     float turnSpeed = 5f;
     [SerializeField]
-    float attackTimer = 2f;
+   // float attackTimer = 0.2f;
 
     public float damage = 10f;
 
@@ -56,7 +56,16 @@ public class EnemyAI : MonoBehaviour
 
     void AttackPlayer()
     {
-        PlayerHealth.PH.Damage(damage);
+        if (PlayerHealth.PH != null)
+        {
+            PlayerHealth.PH.Damage(damage);
+          
+        }
+        else
+        {
+            Debug.LogWarning("PlayerHealth.PH is null! Check initialization.");
+        }
+
 
         agent.updateRotation = false;
         Vector3 direction = target.position - transform.position;

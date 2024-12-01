@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     public float currentHealth; //şu anki can
-    public float maxHealth = 100f;
+    public float maxHealth = 100;
     public static PlayerHealth PH;
 
     public bool isDead; //player ölü mü degil mi 
@@ -41,6 +41,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(currentHealth);
         if (currentHealth <= 0)
         {
             currentHealth = 0;
@@ -61,7 +62,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (isDead) return;
 
-        currentHealth -= damage;
+        currentHealth -= damage*(Time.deltaTime*2);
         if (currentHealth <= 0)
         {
             currentHealth = 0;
