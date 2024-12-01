@@ -22,7 +22,7 @@ public class PlayerHealth : MonoBehaviour
 
     float colorSpeed = 0.5f;
 
-    private GameOverManager gameOverManager;
+    public GameObject gameOverPanel; // Game Over paneli
 
     private void Awake() //start fonkundan önce calisiyo
     {
@@ -36,7 +36,7 @@ public class PlayerHealth : MonoBehaviour
         healthBarSlider.maxValue = maxHealth;
         healthBarSlider.value = maxHealth;
         healthText.text = maxHealth.ToString();
-        gameOverManager = FindObjectOfType<GameOverManager>(); // GameOverManager referansını al
+        gameOverPanel.SetActive(false); // Oyun başında paneli gizle
     }
 
     void Update()
@@ -61,20 +61,36 @@ public class PlayerHealth : MonoBehaviour
     {
         if (isDead) return;
 
-        currentHealth -= damage;
-        if (currentHealth <= 0)
+        StartCoroutine(ReduceHealthOverTime(damage));
+    }
+
+    IEnumerator ReduceHealthOverTime(float damage)
+    {
+        float damagePerStep = damage / 10f; // 10 adımda hasar verecek
+        int steps = 10;
+        float stepDuration = 0.1f; // Her adım 0.1 saniye sürecek
+
+        while (steps > 0 && currentHealth > 0)
         {
-            currentHealth = 0;
-            isDead = true;
-            Dead();
-        }
-        else
-        {
+            currentHealth -= damagePerStep;
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+                isDead = true;
+                Dead();
+                break;
+            }
             isTakingDamage = true;
+            healthBarSlider.value = currentHealth;
+            UpdateText();
+            steps--;
+            yield return new WaitForSeconds(stepDuration); // Adımlar arasında bekle
         }
 
-        healthBarSlider.value = currentHealth;
-        UpdateText();
+        if (!isDead)
+        {
+            isTakingDamage = false;
+        }
     }
 
     public void UpdateText()
@@ -88,6 +104,12 @@ public class PlayerHealth : MonoBehaviour
         isDead = true;
         healthBarSlider.value = 0;
         UpdateText();
-        gameOverManager.ShowGameOverPanel(); // Game Over panelini göster
+        StartCoroutine(ShowGameOverPanel());
+    }
+
+    IEnumerator ShowGameOverPanel()
+    {
+        yield return new WaitForSeconds(1f); // 1 saniye bekle
+        gameOverPanel.SetActive(true);
     }
 }
