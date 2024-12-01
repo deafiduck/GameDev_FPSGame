@@ -29,16 +29,19 @@ public class BubbleMonster : MonoBehaviour
 
         if (distance <= 3f)
         {
-            if (EnemyAI != null)
+            if (PlayerHealth.PH != null)
             {
-                EnemyAI.AttackPlayer();
+                PlayerHealth.PH.Damage(5); // Her saldýrýda sabit 10 hasar ver
+                EnemyAI.nextAttackTime = Time.time + EnemyAI.attackCooldown; // Saldýrýlar arasýnda bekleme süresi
+
             }
             else
             {
-                Debug.LogWarning("EnemyAI reference is missing!");
+                Debug.LogWarning("PlayerHealth.PH is null! Check initialization.");
             }
         }
     }
+
 
     public void FollowPlayer()
     {

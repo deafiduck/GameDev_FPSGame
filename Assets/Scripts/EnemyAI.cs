@@ -14,7 +14,7 @@ public class EnemyAI : MonoBehaviour
     float turnSpeed = 5f;
     public float damage = 10f;
     public float attackCooldown = 1.0f; // Saldırılar arasındaki bekleme süresi
-    private float nextAttackTime;
+    public float nextAttackTime;
 
     void Start()
     {

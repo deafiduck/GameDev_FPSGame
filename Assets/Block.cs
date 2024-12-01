@@ -6,7 +6,9 @@ public class Block : MonoBehaviour
 {
     [SerializeField] int BlockHealth = 100;
 
+    [SerializeField] GameObject GameObjectHide;
     [SerializeField] GameObject GameObjectShow;
+    [SerializeField] List<GameObject> Zombies;
 
     private void Update()
     {
@@ -24,7 +26,17 @@ public class Block : MonoBehaviour
         {
 
             GameObjectShow.SetActive(true);
-            gameObject.SetActive(false);
+            GameObjectHide.SetActive(false);
+            if (Zombies != null && Zombies.Count > 0)
+            {
+                foreach (GameObject zombie in Zombies)
+                {
+                    if (zombie != null)
+                    {
+                        zombie.SetActive(true);  // Her bir zombiyi aktif hale getir
+                    }
+                }
+            }
         }
     }
     public void ReduceHealth(int reduceHealth)
