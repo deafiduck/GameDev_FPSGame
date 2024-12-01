@@ -62,7 +62,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (isDead) return;
 
-        currentHealth -= damage*(Time.deltaTime*2);
+        currentHealth -= damage;
         if (currentHealth <= 0)
         {
             currentHealth = 0;

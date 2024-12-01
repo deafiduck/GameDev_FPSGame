@@ -12,16 +12,16 @@ public class EnemyAI : MonoBehaviour
     public bool isDead = false;
 
     float turnSpeed = 5f;
-    [SerializeField]
-   // float attackTimer = 0.2f;
-
     public float damage = 10f;
+    public float attackCooldown = 1.0f; // Saldırılar arasındaki bekleme süresi
+    private float nextAttackTime;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        nextAttackTime = Time.time;
     }
 
     public float distance;
@@ -36,7 +36,7 @@ public class EnemyAI : MonoBehaviour
         {
             ChasePlayer();
         }
-        else if (distance <= agent.stoppingDistance)
+        else if (distance <= agent.stoppingDistance && Time.time >= nextAttackTime)
         {
             AttackPlayer();
         }
@@ -58,14 +58,13 @@ public class EnemyAI : MonoBehaviour
     {
         if (PlayerHealth.PH != null)
         {
-            PlayerHealth.PH.Damage(damage);
-          
+            PlayerHealth.PH.Damage(damage); // Her saldırıda sabit 10 hasar ver
+            nextAttackTime = Time.time + attackCooldown; // Saldırılar arasında bekleme süresi
         }
         else
         {
             Debug.LogWarning("PlayerHealth.PH is null! Check initialization.");
         }
-
 
         agent.updateRotation = false;
         Vector3 direction = target.position - transform.position;
