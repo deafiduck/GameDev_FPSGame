@@ -12,12 +12,16 @@ public class EnemyAI : MonoBehaviour
     public bool isDead = false;
 
     float turnSpeed = 5f; //player'a doğru dönme hızı
-
+    public float distance;
     //public bool canAttack; //zombi, palyer'a atak yapacak durumda mı. Yani canını 25 azalatabilecek mi.
     [SerializeField]
     float attackTimer = 2f; // player'ın 2 saniyede bir canı azalsın.
 
     EnemyHealth enemyHealth;
+
+    public float damage = 10f; //enemy'nin bize veridği hasar
+
+    bool canAttack = true; // Saldırının gerçekleşip gerçekleşmeyeceğini kontrol eder.
     void Start()
     {
         //canAttack = true;
@@ -25,13 +29,12 @@ public class EnemyAI : MonoBehaviour
         anim = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
-    public float distance;
-
+    
     void Update()
     {
           distance = Vector3.Distance(transform.position, target.position); //zombinin konumu ve ana karakterin konumu arasındaki mesafeyi distance olarak tanımladık
 
-        if (distance < 15 && distance > agent.stoppingDistance /* && !isDead*/)
+        if (distance < 20 && distance > agent.stoppingDistance /* && !isDead*/)
         {
             ChasePlayer();
             Debug.Log("takip ediyoruz ğuuu");
@@ -41,7 +44,7 @@ public class EnemyAI : MonoBehaviour
              AttackPlayer();
             Debug.Log("attack etmek lazım");
         }
-        else if (distance > 15) //zombir, artık takip etmesin
+        else if (distance > 20) //zombir, artık takip etmesin
         {
             StopChase();
             Debug.Log("takibi biraktik ğuuu");
@@ -60,23 +63,26 @@ public class EnemyAI : MonoBehaviour
         //anim.SetBool("Attack", false); //koşarken atak yapamasın
     }
 
-    void AttackPlayer()
-    {
-        // PlayerHealth.PH.Damage(damage);
+   void AttackPlayer()
+{
+    if (!canAttack) return;
 
-        agent.updateRotation = false;
-        Vector3 direction = target.position - transform.position;  //zombi atak yaparken yüzünün player'a dönük olması için rotasyonunu ayarladık
-        direction.y = 0;
-        if (direction != Vector3.zero)
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), turnSpeed * Time.deltaTime);
-        }
-        agent.updatePosition = false; //durarak atak yapacak
-        anim.SetBool("isRunning", false);
-        anim.SetBool("isAttack", true);
-        anim.SetBool("isIdle",false);
-        //  StartCoroutine(AttackTime());
+    PlayerHealth.PH.Damage(damage);
+
+    agent.updateRotation = false;
+    Vector3 direction = target.position - transform.position;
+    direction.y = 0;
+    if (direction != Vector3.zero)
+    {
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), turnSpeed * Time.deltaTime);
     }
+    agent.updatePosition = false; 
+    anim.SetBool("isRunning", false);
+    anim.SetBool("isAttack", true);
+    anim.SetBool("isIdle", false);
+
+    StartCoroutine(AttackCooldown());
+}
 
     void StopChase()
     {
@@ -95,6 +101,14 @@ public class EnemyAI : MonoBehaviour
         anim.SetBool("isIdle", false);
         anim.SetBool("isRunning", false);
 
+    }
+
+
+    IEnumerator AttackCooldown()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(attackTimer); // Saldırı arasındaki bekleme süresi.
+        canAttack = true;
     }
 
     /* public void Hurt()

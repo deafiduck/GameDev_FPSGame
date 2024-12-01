@@ -3,36 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 public class PlayerHealth : MonoBehaviour
 {
     public float currentHealth; //şu anki can
     public float maxHealth = 100f;
-    public static PlayerHealth PH; 
+    public static PlayerHealth PH;
 
     public bool isDead; //player ölü mü degil mi 
 
     public Slider healthBarSlider;
     public Text healthText;
 
-    
-    [Header("Damage Screen")] //Inspectro kýsmýnda Damage Screen diye bir baþlýk attý onun altýna da bu deðiþkenleri koydu
+    [Header("Damage Screen")]
     public Color damageColor;
     public Image damageImage;
     bool isTakingDamage = false;
 
     float colorSpeed = 0.5f;
+
     private void Awake() //start fonkundan önce calisiyo
     {
         PH = this;
     }
+
     void Start()
     {
-       isDead = false;
-       currentHealth = maxHealth;
-       healthBarSlider.value = maxHealth;
-       healthText.text = maxHealth.ToString();
+        isDead = false;
+        currentHealth = maxHealth;
+        healthBarSlider.maxValue = maxHealth;
+        healthBarSlider.value = maxHealth;
+        healthText.text = maxHealth.ToString();
     }
-
 
     void Update()
     {
@@ -47,30 +49,29 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
-            damageImage.color = Color.Lerp(damageImage.color, Color.clear, colorSpeed * Time.deltaTime); //bir þeyin zamanla iki nokta arasýnda deðiþmesini istiyorsak Lerp veya Slerp kullaabiliriz. 
+            damageImage.color = Color.Lerp(damageImage.color, Color.clear, colorSpeed * Time.deltaTime);
         }
         isTakingDamage = false;
     }
 
     public void Damage(float damage)
     {
+        if (isDead) return;
 
-        if (currentHealth > 0)
+        currentHealth -= damage;
+        if (currentHealth <= 0)
         {
-            if (damage >= currentHealth)
-            {
-                isTakingDamage = true;
-                Dead();
-            }
-            else
-            {
-                isTakingDamage = true;
-                currentHealth -= damage;
-                healthBarSlider.value -= damage;
-                UpdateText();
-            }
-
+            currentHealth = 0;
+            isDead = true;
+            Dead();
         }
+        else
+        {
+            isTakingDamage = true;
+        }
+
+        healthBarSlider.value = currentHealth;
+        UpdateText();
     }
 
     public void UpdateText()
