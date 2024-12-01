@@ -56,6 +56,7 @@ public class FlyweightGun : MonoBehaviour
         if (Input.GetButton("Fire1") && Time.time > nextFireTime && currentAmmo > 0)
         {
             Shoot();
+            ShootRay();
         }
 
         if (currentAmmo <= 0 && Input.GetButton("Fire1") && !isReloading)
@@ -120,6 +121,25 @@ public class FlyweightGun : MonoBehaviour
                     // Düþmana hasar ver
                     enemy.ReduceHealth(flyweight.settings.damage);
                     Debug.Log("Enemy hit, health reduced by: " + flyweight.settings.damage);
+                }
+            }
+            else if (hit.transform.CompareTag("CubeWGun"))
+            {
+                Block block =hit.transform.GetComponent<Block>();
+                if (block != null)
+                {
+                    // Düþmana hasar ver
+                    block.ReduceHealth(35);
+                    Debug.Log("block nanay aþko");
+                }
+            }
+            else if (hit.transform.CompareTag("bubbleMonster")){
+                BubbleMonster BM = hit.transform.GetComponent<BubbleMonster>();
+                if (BM != null)
+                {
+                    // Düþmana hasar ver
+                    BM.ReduceHealth(30);
+                    Debug.Log("block nanay aþko");
                 }
             }
             else

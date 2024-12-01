@@ -54,7 +54,7 @@ public class EnemyAI : MonoBehaviour
         anim.SetBool("isRunning", true);
     }
 
-    void AttackPlayer()
+    public void AttackPlayer()
     {
         if (PlayerHealth.PH != null)
         {
