@@ -4447,6 +4447,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4839623502447818988, guid: 4fb2097aeae8f364d88a0913fc0d9b5d, type: 3}
+      propertyPath: zoomedFOV
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4839623502447818988, guid: 4fb2097aeae8f364d88a0913fc0d9b5d, type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 1892352232}
     - target: {fileID: 4839623503384639946, guid: 4fb2097aeae8f364d88a0913fc0d9b5d, type: 3}
       propertyPath: jumpForce
       value: 10
@@ -7727,6 +7735,11 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4057577946846465200, guid: 7b6cba513110fbd4894841ed41c662ae, type: 3}
+--- !u!20 &1892352232 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4839623502594847513, guid: 4fb2097aeae8f364d88a0913fc0d9b5d, type: 3}
+  m_PrefabInstance: {fileID: 886190773}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1925673584 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 51c33c14fc591f24c81f700ba57d1e3c, type: 3}

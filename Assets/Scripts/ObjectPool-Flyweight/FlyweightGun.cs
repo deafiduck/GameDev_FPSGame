@@ -14,6 +14,15 @@ public class FlyweightGun : MonoBehaviour
     private float nextFireTime = 0; // Bir sonraki ateþ etme zamaný
     private bool isReloading = false; // Yeniden yükleme durumu
 
+
+
+    public Camera playerCamera;    // Kamera referansý
+    public float zoomedFOV = 30f; // Zoomlandýðýnda FOV deðeri
+    public float normalFOV = 60f;  // Normal FOV deðeri
+    public float zoomSpeed = 5f;   // Zoom hýzýný kontrol eder
+
+    private bool isZooming = false; // Zoom yapýlma durumu
+
     private void Start()
     {
         currentAmmo = maxAmmo;  // Baþlangýçta maksimum mermi kapasitesi
@@ -21,14 +30,34 @@ public class FlyweightGun : MonoBehaviour
 
     private void Update()
     {
-      
-        if (Input.GetButton("Fire1") && Time.time > nextFireTime && currentAmmo > 0 && !isReloading)
+
+        if (Input.GetMouseButton(1)) // Sað týk: 1
         {
-            Shoot();
-            ShootRay();
+            isZooming = true;
+        }
+        else
+        {
+            isZooming = false;
         }
 
-        
+        // Zoom iþlemi
+        if (isZooming)
+        {
+            // Kamera FOV deðerini yavaþça zoomlanan deðere doðru deðiþtir
+            playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, zoomedFOV, Time.deltaTime * zoomSpeed);
+        }
+        else
+        {
+            // FOV deðerini normale döndür
+            playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, normalFOV, Time.deltaTime * zoomSpeed);
+        }
+
+        // Sol týklama (mouse left button) ile ateþ etme
+        if (Input.GetButton("Fire1") && Time.time > nextFireTime && currentAmmo > 0)
+        {
+            Shoot();
+        }
+
         if (currentAmmo <= 0 && Input.GetButton("Fire1") && !isReloading)
         {
             EmptyFire();
