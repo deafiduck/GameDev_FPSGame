@@ -25,6 +25,7 @@ public class FlyweightGun : MonoBehaviour
         if (Input.GetButton("Fire1") && Time.time > nextFireTime && currentAmmo > 0 && !isReloading)
         {
             Shoot();
+            ShootRay();
         }
 
         
@@ -56,10 +57,10 @@ public class FlyweightGun : MonoBehaviour
 
             // Mermiyi ateþle
             currentAmmo--;  // Mermiyi azalt
-           // ShootRay(flyweight);
+
            
         }
-
+        
 
     }
 
@@ -73,10 +74,10 @@ public class FlyweightGun : MonoBehaviour
         }
     }
 
-    void ShootRay(Flyweight.Flyweight flyweight)
+    void ShootRay()
     {
         RaycastHit hit;
-
+        var flyweight = FlyweightFactory.Spawn(flyweights[0]);
         // Raycast ile hedefi kontrol et
         if (Physics.Raycast(shootPoint.position, shootPoint.forward, out hit)) // Merminin çýkacaðý yer, yönü, hedef, mesafe
         {
