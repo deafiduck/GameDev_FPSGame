@@ -3,7 +3,10 @@ guid: 1c00c8d05a5a61640a1d47a05d2993ce
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - GameObjectHide: {instanceID: 0}
+  - GameObjectShow: {instanceID: 0}
+  - interactionSound: {fileID: 8300000, guid: 2d0fb47198d62464e892ccc38a7aa19d, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
