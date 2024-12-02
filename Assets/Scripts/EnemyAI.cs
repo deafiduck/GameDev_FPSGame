@@ -32,7 +32,7 @@ public class EnemyAI : MonoBehaviour
 
         distance = Vector3.Distance(transform.position, target.position);
 
-        if (distance < 20 && distance > agent.stoppingDistance)
+        if (distance < 40 && distance > agent.stoppingDistance)
         {
             ChasePlayer();
         }
@@ -40,7 +40,7 @@ public class EnemyAI : MonoBehaviour
         {
             AttackPlayer();
         }
-        else if (distance > 20)
+        else if (distance >= 40)
         {
             StopChase();
         }
