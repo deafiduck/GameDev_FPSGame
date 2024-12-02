@@ -12,7 +12,7 @@ public class EnemyAI : MonoBehaviour
     public bool isDead = false;
 
     float turnSpeed = 5f;
-    public float damage = 10f;
+    public float damage = 5f;
     public float attackCooldown = 1.0f; // Saldırılar arasındaki bekleme süresi
     public float nextAttackTime;
 

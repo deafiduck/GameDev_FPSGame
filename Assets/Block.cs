@@ -9,13 +9,13 @@ public class Block : MonoBehaviour
 	[SerializeField] GameObject GameObjectHide;
 	[SerializeField] GameObject GameObjectShow;
 	[SerializeField] List<GameObject> Zombies;
-	[SerializeField] AudioClip interactionSound; // Ses dosyasýný tanýmlayýn
+	[SerializeField] AudioSource audioSource; // Ses dosyasýný tanýmlayýn
 
-	private AudioSource audioSource;
+	///private AudioSource audioSource;
 
 	private void Start()
 	{
-		audioSource = gameObject.AddComponent<AudioSource>(); // AudioSource bileþeni ekleyin
+		audioSource = GetComponent<AudioSource>(); // AudioSource bileþeni ekleyin
 	}
 
 	private void Update()
@@ -46,7 +46,7 @@ public class Block : MonoBehaviour
 		}
 	}
 
-	public void ReduceHealth(int reduceHealth)
+	/*public void ReduceHealth(int reduceHealth)
 	{
 		BlockHealth -= reduceHealth;
 		Debug.Log("Block Health Reduced: " + BlockHealth);
@@ -56,14 +56,15 @@ public class Block : MonoBehaviour
 			BlockHealth = 0;
 			gameObject.SetActive(false);
 		}
-	}
+	}*/
 
 	private void PlayInteractionSound()
 	{
-		if (interactionSound != null)
+		if (audioSource != null)
 		{
-			audioSource.clip = interactionSound;
+		
 			audioSource.Play();
+			Debug.Log("ses calisti");
 		}
 	}
 }

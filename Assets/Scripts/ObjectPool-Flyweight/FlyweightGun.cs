@@ -129,7 +129,7 @@ public class FlyweightGun : MonoBehaviour
                 if (block != null)
                 {
                     // Düþmana hasar ver
-                    block.ReduceHealth(35);
+                    //block.ReduceHealth(35);
                     Debug.Log("block nanay aþko");
                 }
             }
